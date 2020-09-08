@@ -1,25 +1,24 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { GlobalStyle } from  './style'
-import { renderRoutes } from 'react-router-config'//renderRoutes 读取路由配置转化为 Route 标签
+import { GlobalStyle } from './style'
+import { renderRoutes } from 'react-router-config' // renderRoutes 读取路由配置转化为 Route 标签
 import { IconStyle } from './assets/iconfont/iconfont'
 import store from './store/index'
 import routes from './routes/index.js'
 import { HashRouter } from 'react-router-dom'
 
-
-function App () {
+function App() {
   return (
     <Provider store={store}>
       <HashRouter>
-        <div className="App">
+        <div className='App'>
           <GlobalStyle></GlobalStyle>
           <IconStyle></IconStyle>
           { renderRoutes(routes) }
         </div>
       </HashRouter>
     </Provider>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,10 +1,10 @@
-//src/appliction/Home/index.js
-import React from 'react';
+// src/appliction/Home/index.js
+import React from 'react'
 
-function Singers (props) {
+function Singers(props) {
   return (
     <div>Singers</div>
   )
 }
 
-export default React.memo (Singers);
+export default React.memo(Singers)

@@ -1,5 +1,5 @@
-import styled from'styled-components';
-import style from '../../assets/global-style';
+import styled from 'styled-components'
+import style from '../../assets/global-style'
 
 export const ListWrapper = styled.div`
   max-width: 100%;
@@ -9,14 +9,14 @@ export const ListWrapper = styled.div`
     font-size: 14px;
     line-height: 60px;
   }
-`;
+`
 export const List = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-`;
+`
 
 export const ListItem = styled.div`
   position: relative;
@@ -38,9 +38,9 @@ export const ListItem = styled.div`
       position: absolute;
       right: 2px;
       top: 2px;
-      font-size: ${style ["font-size-s"]};
+      font-size: ${style['font-size-s']};
       line-height: 15px;
-      color: ${style ["font-color-light"]};
+      color: ${style['font-color-light']};
       .play {
         vertical-align: top;
       }
@@ -58,8 +58,8 @@ export const ListItem = styled.div`
       padding: 0 2px;
       height: 50px;
       text-align: left;
-      font-size: ${style ["font-size-s"]};
+      font-size: ${style['font-size-s']};
       line-height: 1.4;
-      color: ${style ["font-color-desc"]};
+      color: ${style['font-color-desc']};
     }
-`;
+`

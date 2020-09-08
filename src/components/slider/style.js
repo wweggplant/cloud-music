@@ -1,5 +1,5 @@
-import styled from'styled-components';
-import style from '../../assets/global-style';
+import styled from 'styled-components'
+import style from '../../assets/global-style'
 
 export const SliderContainer = styled.div`
   position: relative;
@@ -13,7 +13,10 @@ export const SliderContainer = styled.div`
     top: 0;
     height: 60%;
     width: 100%;
-    background: ${style["theme-color"]};
+    background: ${style['theme-color']};
+
+  // top: -300px;
+  // height: 400px;
   }
   .slider-container {
     position: relative;
@@ -29,7 +32,7 @@ export const SliderContainer = styled.div`
       height: 100%;
     }
     .swiper-pagination-bullet-active {
-      background: ${style["theme-color"]};
+      background: ${style['theme-color']};
     }
   }
 `

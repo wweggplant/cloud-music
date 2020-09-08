@@ -1,33 +1,33 @@
-import React from 'react';
-import { Redirect } from "react-router-dom";
-import Home from '../application/Home';
-import Recommend from '../application/Recommend';
-import Singers from '../application/Singers';
-import Rank from '../application/Rank';
-
+import React from 'react'
+import { Redirect } from 'react-router-dom'
+import Home from '../application/Home'
+import Recommend from '../application/Recommend'
+import Singers from '../application/Singers'
+import Rank from '../application/Rank'
 
 export default [
   {
-    path: "/",
+    path: '/',
     component: Home,
     routes: [
       {
-        path: "/",
+        path: '/',
         exact: true,
+        // eslint-disable-next-line react/display-name
         render: () => (
-          <Redirect to={"/recommend"}/>
+          <Redirect to={'/recommend'}/>
         )
       },
       {
-        path: "/recommend",
+        path: '/recommend',
         component: Recommend
       },
       {
-        path: "/singers",
+        path: '/singers',
         component: Singers
       },
       {
-        path: "/rank",
+        path: '/rank',
         component: Rank
       }
     ]
