@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const baseUrl = ''
+export const baseUrl = 'http://www.ipanda.site:3000/'
 
 const axiosInstance = axios.create({
   baseURL: baseUrl

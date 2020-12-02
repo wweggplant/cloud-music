@@ -15,14 +15,14 @@ export const changeRecommendList = (data) => ({
 export const getBannerlist = () => {
   return (dispatch) => {
     getBannerRequest().then(data => {
-      dispatch(changeBannerList(data))
+      dispatch(changeBannerList(data.banners))
     })
   }
 }
 export const getRecommendList = () => {
   return (dispatch) => {
     getRecommendListRequest().then(data => {
-      dispatch(changeRecommendList(data))
+      dispatch(changeRecommendList(data.result))
     })
   }
 }
