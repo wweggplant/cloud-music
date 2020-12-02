@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import BScroll from "better-scroll"
 import styled from 'styled-components';
 import Loading from '../loading/index';
+import Loading2 from '../LoadingV2/index';
 import { debounce } from "../../api/utils";
 
 const ScrollContainer = styled.div`
@@ -176,7 +177,7 @@ const Scroll = forwardRef((props, ref) => {
       {/* 滑到底部加载动画 */}
       <PullUpLoading style={ PullUpdisplayStyle }><Loading></Loading></PullUpLoading>
       {/* 顶部下拉刷新动画 */}
-      <PullDownLoading style={ PullDowndisplayStyle }></PullDownLoading>
+      <PullDownLoading style={ PullDowndisplayStyle }><Loading2></Loading2></PullDownLoading>
     </ScrollContainer>
   );
 })

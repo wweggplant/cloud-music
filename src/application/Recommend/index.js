@@ -24,7 +24,7 @@ function Recommend(props) {
     if (!recommendList.size) {
       getRecommendListDataDispatch()
     }
-  }, [])
+  }, [bannerList.size, getBannerDataDispatch, getRecommendListDataDispatch, recommendList.size])
   const bannerListJS = bannerList ? bannerList.toJS() : []
   const recommendListJS = recommendList ? recommendList.toJS() : []
   return (

@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import Horizen from '../../baseUI/horizen-item'
 import { categoryTypes, areaTypes } from '../../api/config'
 import { NavContainer, ListContainer, List, ListItem } from './style'
-import Scroll from '../../baseUI/scroll'
+import Scroll from '../../baseUI/scroll';
+import  LazyLoad, {forceCheck} from 'react-lazyload';
+
 import {
   getSingerList,
   getHotSingerList,
@@ -15,13 +17,14 @@ import {
   changePullDownLoading,
   refreshMoreHotSingerList
 } from './store/actionCreators';
+import Loading from "../../baseUI/loading";
 
 function useClickHorizenItem(init = '', updateDispatch) {
   const [state, setState] = useState(init)
   const handleState = useCallback((val) => {
     setState(val)
     updateDispatch && updateDispatch(val)
-  }, [state])
+  }, [updateDispatch])
   return [state, handleState]
 }
 
@@ -33,7 +36,9 @@ const renderSingerList = (singerList) => {
           return (
             <ListItem key={item.accountId+""+index}>
               <div className="img_wrapper">
-                <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music"/>
+                <LazyLoad  placeholder={<img width="100%" height="100%" src={require ('./singer.png')} alt="music"/>}>
+                  <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music"/>
+                </LazyLoad>
               </div>
               <span className="name">{item.name}</span>
             </ListItem>
@@ -43,6 +48,7 @@ const renderSingerList = (singerList) => {
     </List>
   )
 }
+
 function Singers(props) {
   const [type, handleType] = useClickHorizenItem('-1', function (type) {
     updateDispatch(type, area);
@@ -50,21 +56,35 @@ function Singers(props) {
   const [area, handleUpdateArea] = useClickHorizenItem('-1', function (area) {
     updateDispatch(type, area);
   })
-  const { singerList }  = props
+  const { singerList, pageCount, pullUpLoading, pullDownLoading, enterLoading }  = props
+  const { pullUpRefreshDispatch, pullDownRefreshDispatch }  = props
+  const handlePullUp = () => {
+    pullUpRefreshDispatch (type, area, type === '-1', pageCount);
+  };
+
+  const handlePullDown = () => {
+    pullDownRefreshDispatch (type, area);
+  };
   const singerListJS = singerList ? singerList.toJS() : []
-  console.log(singerList)
   const { getHotSingerDispatch, updateDispatch } = props;
   useEffect(() => {
     getHotSingerDispatch()
   }, [])
   return (
     <div>
+      <Loading show={enterLoading}></Loading>
       <NavContainer>
         <Horizen list={categoryTypes} title={"分类:"} handleClick={handleType} oldVal={type}></Horizen>
         <Horizen list={areaTypes} title={"地区:"} handleClick={handleUpdateArea} oldVal={area}></Horizen>
       </NavContainer>
       <ListContainer>
-        <Scroll>
+        <Scroll
+          pullUp={ handlePullUp }
+          pullDown = { handlePullDown }
+          pullUpLoading = { pullUpLoading }
+          pullDownLoading = { pullDownLoading }
+          onScroll={forceCheck}
+        >
           { renderSingerList (singerListJS) }
         </Scroll>
       </ListContainer>
