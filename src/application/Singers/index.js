@@ -8,6 +8,7 @@ import Scroll from '../../baseUI/scroll';
 import  LazyLoad, {forceCheck} from 'react-lazyload';
 
 import {
+  changeParams,
   getSingerList,
   getHotSingerList,
   changeEnterLoading,
@@ -17,6 +18,7 @@ import {
   changePullDownLoading,
   refreshMoreHotSingerList
 } from './store/actionCreators';
+import { INIT_TYPE } from './store/constants'
 import Loading from "../../baseUI/loading";
 
 function useClickHorizenItem(init = '', updateDispatch) {
@@ -50,16 +52,17 @@ const renderSingerList = (singerList) => {
 }
 
 function Singers(props) {
-  const [type, handleType] = useClickHorizenItem('-1', function (type) {
+
+  const { singerList, pageCount, pullUpLoading, pullDownLoading, enterLoading, type: initType, area: initArea }  = props
+  const { pullUpRefreshDispatch, pullDownRefreshDispatch, changeParams }  = props
+  const [type, handleType] = useClickHorizenItem(initType, function (type) {
     updateDispatch(type, area);
   })
-  const [area, handleUpdateArea] = useClickHorizenItem('-1', function (area) {
+  const [area, handleUpdateArea] = useClickHorizenItem(initArea, function (area) {
     updateDispatch(type, area);
   })
-  const { singerList, pageCount, pullUpLoading, pullDownLoading, enterLoading }  = props
-  const { pullUpRefreshDispatch, pullDownRefreshDispatch }  = props
   const handlePullUp = () => {
-    pullUpRefreshDispatch (type, area, type === '-1', pageCount);
+    pullUpRefreshDispatch (type, area, type === INIT_TYPE, pageCount);
   };
 
   const handlePullDown = () => {
@@ -99,9 +102,14 @@ const mapStateToProps = (state) => ({
   enterLoading: state.getIn(['singers', 'enterLoading']),
   pullUpLoading: state.getIn(['singers', 'pullUpLoading']),
   pullDownLoading: state.getIn(['singers', 'pullDownLoading']),
-  pageCount: state.getIn(['singers', 'pageCount'])
+  pageCount: state.getIn(['singers', 'pageCount']),
+  type: state.getIn(['singers', 'type']),
+  area: state.getIn(['singers', 'area']),
 })
 const mapDispatchToProps = dispatch => ({
+  changeParams(type, area) {
+    dispatch(changeParams(type, area));
+  },
   getHotSingerDispatch() {
     dispatch(getHotSingerList());
   },
@@ -109,6 +117,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changePageCount(0));//由于改变了分类，所以pageCount清零
     dispatch(changeEnterLoading(true));//loading，现在实现控制逻辑，效果实现放到下一节，后面的loading同理
     dispatch(getSingerList(type, area));
+    dispatch(changeParams({type, area}))
   },
   pullUpRefreshDispatch(type, area, hot, count) {
     dispatch(changePullUpLoading(true));

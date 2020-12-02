@@ -3,6 +3,7 @@ import {
   getSingerListRequest
 } from "../../../api/request";
 import {
+  CHANGE_QUEST_PARAMS,
   CHANGE_SINGER_LIST,
   CHANGE_PAGE_COUNT,
   CHANGE_PULLUP_LOADING,
@@ -99,3 +100,8 @@ export const refreshMoreSingerList = (type, area) => {
     });
   }
 };
+
+export const changeParams = (data) => ({
+  type: CHANGE_QUEST_PARAMS,
+  data
+});
