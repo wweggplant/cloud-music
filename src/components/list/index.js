@@ -1,6 +1,6 @@
 import React from 'react'
 import { getCount } from '../../api/utils'
-import LazyLoad, { forceCheck } from "react-lazyload"
+import LazyLoad from "react-lazyload"
 
 import {
   ListWrapper,
