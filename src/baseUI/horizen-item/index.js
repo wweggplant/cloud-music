@@ -14,7 +14,7 @@ function Horizen(props) {
     Array.from($spanList).forEach(span => {
       totalWidth += span.offsetWidth
     })
-    catDom.style.width = `${totalWidth}px`;
+    catDom.style.width = `${totalWidth + 20}px`;
   }, [])
   return  (
     <Scroll direction={"horizental"}>
