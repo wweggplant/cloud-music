@@ -54,7 +54,7 @@ const renderSingerList = (singerList) => {
 function Singers(props) {
 
   const { singerList, pageCount, pullUpLoading, pullDownLoading, enterLoading, type: initType, area: initArea }  = props
-  const { pullUpRefreshDispatch, pullDownRefreshDispatch, changeParams }  = props
+  const { pullUpRefreshDispatch, pullDownRefreshDispatch }  = props
   const [type, handleType] = useClickHorizenItem(initType, function (type) {
     updateDispatch(type, area);
   })
@@ -72,7 +72,7 @@ function Singers(props) {
   const { getHotSingerDispatch, updateDispatch } = props;
   useEffect(() => {
     getHotSingerDispatch()
-  }, [])
+  }, [getHotSingerDispatch])
   return (
     <div>
       <Loading show={enterLoading}></Loading>
