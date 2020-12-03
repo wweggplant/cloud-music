@@ -6,7 +6,6 @@ import { categoryTypes, areaTypes } from '../../api/config'
 import { NavContainer, ListContainer, List, ListItem } from './style'
 import Scroll from '../../baseUI/scroll';
 import  LazyLoad, {forceCheck} from 'react-lazyload';
-
 import {
   changeParams,
   getSingerList,
