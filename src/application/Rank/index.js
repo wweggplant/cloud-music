@@ -78,6 +78,7 @@ function Rank(props) {
           { loading ? <EnterLoading><Loading></Loading></EnterLoading> : null }
         </div>
       </Scroll>
+      {renderRoutes (props.route.routes)}
     </Container>
   )
 }

@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import * as actionTypes from './store/actionCreators';
 import { forceCheck } from 'react-lazyload';
 import Loading  from "../../baseUI/loading";
+import { renderRoutes } from 'react-router-config'
 export const Content = styled.div`
   position: fixed;
   top: 90px;
@@ -36,6 +37,7 @@ function Recommend(props) {
           <RecommendList recommendList={recommendListJS}></RecommendList>
         </div>
       </Scroll>
+      { renderRoutes (props.route.routes) }
     </Content>
   )
 }
