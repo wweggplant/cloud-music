@@ -25,15 +25,16 @@ function Rank(props) {
   let officialList = rankList.slice (0, globalStartIndex);
   let globalList = rankList.slice (globalStartIndex);
   let displayStyle = loading ? {"display":"none"}:  {"display": ""};
-  console.log(officialList)
-  console.log(globalList)
+  const enterDetail = (detail) => {
+    props.history.push (`/rank/${detail.id}`)
+  }
   const renderRankList = (list, global) => {
     return (
       <List globalRank={global}>
         {
           list.map ((item, index) => {
             return (
-              <ListItem key={item.coverImgId} tracks={item.tracks} onClick={() => enterDetail (item.name)}>
+              <ListItem key={item.coverImgId} tracks={item.tracks} onClick={() => enterDetail (item)} >
                 <div className="img_wrapper">
                   <img src={item.coverImgUrl} alt=""/>
                   <div className="decorate"></div>
@@ -57,14 +58,6 @@ function Rank(props) {
         }
       </SongList>
     ) : null;
-  }
-
-  const enterDetail = (name) => {
-    const idx = filterIdx(name);
-    if(idx === null) {
-      alert("暂无相关数据");
-      return;
-    }
   }
 
   return (
