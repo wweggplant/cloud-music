@@ -19,7 +19,7 @@ import {
 } from './store/actionCreators';
 import { INIT_TYPE } from './store/constants'
 import Loading from "../../baseUI/loading";
-
+import { renderRoutes } from 'react-router-config';
 function useClickHorizenItem(init = '', updateDispatch) {
   const [state, setState] = useState(init)
   const handleState = useCallback((val) => {
@@ -29,28 +29,30 @@ function useClickHorizenItem(init = '', updateDispatch) {
   return [state, handleState]
 }
 
-const renderSingerList = (singerList) => {
-  return (
-    <List>
-      {
-        singerList.map ((item, index) => {
-          return (
-            <ListItem key={item.accountId+""+index}>
-              <div className="img_wrapper">
-                <LazyLoad  placeholder={<img width="100%" height="100%" src={require ('./singer.png')} alt="music"/>}>
-                  <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music"/>
-                </LazyLoad>
-              </div>
-              <span className="name">{item.name}</span>
-            </ListItem>
-          )
-        })
-      }
-    </List>
-  )
-}
-
 function Singers(props) {
+  const enterDetail = useCallback((detail) => {
+    props.history.push(`/singers/${detail.id}`)
+  }, [props.history])
+  const renderSingerList = (singerList) => {
+    return (
+        <List>
+          {
+            singerList.map ((item, index) => {
+              return (
+                <ListItem key={item.accountId+""+index} onClick={() => enterDetail(item)}>
+                  <div className="img_wrapper">
+                    <LazyLoad  placeholder={<img width="100%" height="100%" src={require ('./singer.png')} alt="music"/>}>
+                      <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music"/>
+                    </LazyLoad>
+                  </div>
+                  <span className="name">{item.name}</span>
+                </ListItem>
+              )
+            })
+          }
+        </List>
+    )
+  }
 
   const { singerList, pageCount, pullUpLoading, pullDownLoading, enterLoading, type: initType, area: initArea }  = props
   const { pullUpRefreshDispatch, pullDownRefreshDispatch }  = props
@@ -90,6 +92,7 @@ function Singers(props) {
           { renderSingerList (singerListJS) }
         </Scroll>
       </ListContainer>
+      { renderRoutes(props.route.routes)}
     </div>
   )
 }

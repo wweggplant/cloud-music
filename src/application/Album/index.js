@@ -30,7 +30,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(function 
   }, []);
   const handleScroll = useCallback(() => {
 
-  }, [currentAlbum])
+  }, [])
   useEffect (() => {
     getAlbumDataDispatch (id);
   }, [getAlbumDataDispatch, id]);

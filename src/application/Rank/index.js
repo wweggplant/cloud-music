@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from "react-redux";
-import { filterIndex, filterIdx } from '../../api/utils'
+import { filterIndex } from '../../api/utils'
 import { Container, List, ListItem, SongList} from './style'
 import Scroll from '../../baseUI/scroll'
 import Loading  from "../../baseUI/loading";
