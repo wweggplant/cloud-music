@@ -9,6 +9,8 @@ import * as actionTypes from './store/actionCreators';
 import { forceCheck } from 'react-lazyload';
 import Loading  from "../../baseUI/loading";
 import { renderRoutes } from 'react-router-config'
+import { withRouter } from 'react-router-dom';
+
 export const Content = styled.div`
   position: fixed;
   top: 90px;
@@ -57,4 +59,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actionTypes.getRecommendList())
   }
 })
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Recommend))
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(withRouter(Recommend)))
