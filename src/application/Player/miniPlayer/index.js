@@ -17,8 +17,6 @@ function MiniPlayer(props) {
       onEnter={() => {
         miniPlayerRef.current.style.display = "flex";
       }}
-      //onEntered={afterEnter}
-      //onExit={leave}
       onExited={() => {
         miniPlayerRef.current.style.display = "none";
       }}

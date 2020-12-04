@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { getName, prefixStyle } from "../../../api/utils";
+import React, { useRef, useEffect } from 'react'
+import { getName, prefixStyle, formatPlayTime } from "../../../api/utils";
 import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
 import ProgressBar from "../../../baseUI/progress-bar";
@@ -33,8 +33,8 @@ const _getPosAndScale = () => {
   };
 };
 function NormalPlayer (props) {
-  const {song, fullScreen } =  props;
-  const { toggleFullScreen } = props;
+  const { toggleFullScreen, clickPlaying, onProgressChange } = props
+  const { song, fullScreen, playing, percent, currentTime, duration } = props;
   const normalPlayerRef = useRef ();
   const cdWrapperRef = useRef ();
   const enter = () => {
@@ -80,6 +80,9 @@ function NormalPlayer (props) {
     cdWrapperDom.style[transform] = "";
     normalPlayerRef.current.style.display = "none";
   }
+  useEffect(() => {
+
+  }, [percent])
   return (
     <CSSTransition
       classNames="normal"
@@ -112,20 +115,19 @@ function NormalPlayer (props) {
           <CDWrapper>
             <div className="cd">
               <img
-                className="image play"
+                className={`image play ${playing ? "" : "pause"}`}
                 src={song.al.picUrl + "?param=400x400"}
-                alt=""
               />
             </div>
           </CDWrapper>
         </Middle>
         <Bottom className="bottom">
           <ProgressWrapper>
-            <span className="time time-l">0:00</span>
+            <span className="time time-l">{formatPlayTime(currentTime)}</span>
             <div className="progress-bar-wrapper">
-              <ProgressBar percent={0.2}></ProgressBar>
+              <ProgressBar percent={percent} percentChange={onProgressChange}/>
             </div>
-            <div className="time time-r">4:17</div>
+            <div className="time time-r">{formatPlayTime(duration)}</div>
           </ProgressWrapper>
           <Operators>
             <div className="icon i-left" >
@@ -134,8 +136,8 @@ function NormalPlayer (props) {
             <div className="icon i-left">
               <i className="iconfont">&#xe6e1;</i>
             </div>
-            <div className="icon i-center">
-              <i className="iconfont">&#xe723;</i>
+            <div className="icon i-center" onClick={e => clickPlaying(e, !playing)}>
+              {playing ? <i className="iconfont">&#xe723;</i> : <i className="iconfont">&#xe731;</i>}
             </div>
             <div className="icon i-right">
               <i className="iconfont">&#xe718;</i>

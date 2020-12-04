@@ -86,6 +86,13 @@ function ProgressBar (props) {
     const curPercent = progress.current.clientWidth/barWidth
     percentChange (curPercent)
   }
+  useEffect(() => {
+    if(percent >= 0 && percent <= 1 && !touch.initiated) {
+      const barWidth = getBarWidth()
+      _offset (barWidth * percent);
+    }
+    // _changePercent ()
+  }, [percent])
   return (
     <ProgressBarWrapper onClick={clickProgress}>
       <div className="bar-inner" ref={progressBar}>
