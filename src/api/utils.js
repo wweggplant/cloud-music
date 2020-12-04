@@ -66,7 +66,7 @@ let vendor = (() => {
     standard: "Transform"
   };
   for (let key in transformNames) {
-    if (elementStyle [transformNames [key]] !== undefined) {
+    if (elementStyle[transformNames[key]] !== undefined) {
       return key;
     }
   }

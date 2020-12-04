@@ -18,12 +18,18 @@ function Player(props) {
     name: "木偶人",
     ar: [{name: "薛之谦"}]
   }
-  const { fullScreen } = props
-  const { toggleFullScreenDispatch } = props
-
+  const { fullScreen, playing, percent } = props
+  const { toggleFullScreenDispatch, togglePlayingDispatch } = props
+  const clickPlaying = (e, state) => {
+    e.stopPropagation();
+    togglePlayingDispatch(state);
+  };
   return (
     <>
       <MiniPlayer
+        playing={playing}
+        percent={percent}
+        clickPlaying={clickPlaying}
         song={currentSong}
         fullScreen={fullScreen}
         toggleFullScreen={toggleFullScreenDispatch}

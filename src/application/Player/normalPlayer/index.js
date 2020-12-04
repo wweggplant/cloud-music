@@ -2,6 +2,8 @@ import React, { useRef } from 'react'
 import { getName, prefixStyle } from "../../../api/utils";
 import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
+import ProgressBar from "../../../baseUI/progress-bar";
+import { ProgressWrapper } from './style'
 import {
   NormalPlayerContainer,
   Top,
@@ -69,13 +71,13 @@ function NormalPlayer (props) {
     const cdWrapperDom = cdWrapperRef.current
     cdWrapperDom.style.transition = 'all .4s'
     const { x, y, scale } = _getPosAndScale ();
-    cdWrapperDom.style [transform] = `translate3d (${x} px, ${y} px, 0) scale (${scale})`;
+    cdWrapperDom.style[transform] = `translate3d (${x} px, ${y} px, 0) scale (${scale})`;
   }
   const afterLeave = () => {
     if (!cdWrapperRef.current) return;
     const cdWrapperDom = cdWrapperRef.current;
     cdWrapperDom.style.transition = "";
-    cdWrapperDom.style [transform] = "";
+    cdWrapperDom.style[transform] = "";
     normalPlayerRef.current.style.display = "none";
   }
   return (
@@ -118,6 +120,13 @@ function NormalPlayer (props) {
           </CDWrapper>
         </Middle>
         <Bottom className="bottom">
+          <ProgressWrapper>
+            <span className="time time-l">0:00</span>
+            <div className="progress-bar-wrapper">
+              <ProgressBar percent={0.2}></ProgressBar>
+            </div>
+            <div className="time time-r">4:17</div>
+          </ProgressWrapper>
           <Operators>
             <div className="icon i-left" >
               <i className="iconfont">&#xe625;</i>
