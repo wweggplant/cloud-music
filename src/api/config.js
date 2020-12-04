@@ -84,7 +84,11 @@ export const RankTypes = {
   "22": "云音乐ACG音乐榜",
   "23": "江小白YOLO云音乐说唱榜"
 };
-
+export const playMode = {
+  sequence: 0,
+  loop: 1,
+  random: 2
+};
 export {
   axiosInstance
 }

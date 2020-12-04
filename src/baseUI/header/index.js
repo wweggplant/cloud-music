@@ -23,7 +23,6 @@ const HeaderContainer = styled.div`
     font-weight: 700;
   }
 `
-// 处理函数组件拿不到 ref 的问题，所以用 forwardRef
 const Header = React.forwardRef ((props, ref) => {
   const { handleClick, title} = props;
   return (
