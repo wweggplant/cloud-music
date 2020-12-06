@@ -4,6 +4,7 @@ import { Container, ImgWrapper, CollectButton, BgLayer, SongListWrapper } from '
 import Header from '../../baseUI/header'
 import SongsList from "../SongsList";
 import Scroll from "../../baseUI/scroll";
+import MusicNote from "../../baseUI/music-note/index";
 const artist = {
   picUrl: "https://p2.music.126.net/W__FCWFiyq0JdPtuLJoZVQ==/109951163765026271.jpg",
   name: "薛之谦",
@@ -38,7 +39,10 @@ function Singer(props) {
   const layer = useRef ();
   // 图片初始高度
   const initialHeight = useRef (0);
-
+  const musicNoteRef = useRef ();
+  const musicAnimation = (x, y) => {
+    musicNoteRef.current.startAnimation ({ x, y });
+  };
   // 往上偏移的尺寸，露出圆角
   const OFFSET = 5;
   useEffect(function () {
@@ -72,10 +76,12 @@ function Singer(props) {
             <SongsList
               songs={artist.hotSongs}
               showCollect={false}
+              musicAnimation={musicAnimation}
             >
             </SongsList>
           </Scroll>
         </SongListWrapper>
+        <MusicNote ref={musicNoteRef}></MusicNote>
       </Container>
     </CSSTransition>)
 }

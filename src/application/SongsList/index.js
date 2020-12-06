@@ -1,15 +1,35 @@
 import React from 'react';
 import { SongList, SongItem } from "./style";
 import { getName } from '../../api/utils';
-
+import { changePlayList, changeCurrentIndex, changeSequecePlayList } from './../../application/Player/store/actionCreators';
+import { connect } from 'react-redux';
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changePlayListDispatch (data){
+      dispatch (changePlayList (data));
+    },
+    changeCurrentIndexDispatch (data) {
+      dispatch (changeCurrentIndex (data));
+    },
+    changeSequecePlayListDispatch (data) {
+      dispatch (changeSequecePlayList (data))
+    }
+  }
+};
 const SongsList = React.forwardRef ((props, refs)=> {
 
-  const { collectCount, showCollect, songs } = props;
+  const { collectCount, showCollect, songs, showBackground } = props;
+  const { changePlayListDispatch, changeCurrentIndexDispatch, changeSequecePlayListDispatch } = props;
 
+// 接受触发动画的函数
+  const { musicAnimation } = props;
   const totalCount = songs.length;
 
   const selectItem = (e, index) => {
-    console.log (index);
+    changePlayListDispatch (songs);
+    changeSequecePlayListDispatch (songs);
+    changeCurrentIndexDispatch (index);
+    musicAnimation (e.nativeEvent.clientX, e.nativeEvent.clientY);
   }
 
   let songList = (list) => {
@@ -40,7 +60,7 @@ const SongsList = React.forwardRef ((props, refs)=> {
     )
   };
   return (
-    <SongList ref={refs} showBackground={props.showBackground}>
+    <SongList ref={refs} showBackground={showBackground}>
       <div className="first_line">
         <div className="play_all" onClick={(e) => selectItem (e, 0)}>
           <i className="iconfont">&#xe6e3;</i>
@@ -55,4 +75,4 @@ const SongsList = React.forwardRef ((props, refs)=> {
   )
 });
 
-export default React.memo (SongsList);
+export default connect (null, mapDispatchToProps)(React.memo (SongsList));

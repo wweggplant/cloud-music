@@ -48,14 +48,14 @@ function ProgressBar (props) {
   const progressTouchStart = (e) => {
     const startTouch = {};
     startTouch.initiated = true;//initial 为 true 表示滑动动作开始了
-    startTouch.startX = e.touches [0].pageX;// 滑动开始时横向坐标
+    startTouch.startX = e.touches[0].pageX;// 滑动开始时横向坐标
     startTouch.left = progress.current.clientWidth;// 当前 progress 长度
     setTouch (startTouch);
   }
   const progressTouchMove = (e) => {
     if (!touch.initiated) return;
     // 滑动距离
-    const deltaX = e.touches [0].pageX - touch.startX;
+    const deltaX = e.touches[0].pageX - touch.startX;
     const barWidth = getBarWidth()
     const offsetWidth = Math.min (Math.max (0, touch.left + deltaX), barWidth);
     _offset (offsetWidth);
@@ -92,7 +92,7 @@ function ProgressBar (props) {
       _offset (barWidth * percent);
     }
     // _changePercent ()
-  }, [percent])
+  }, [percent, touch.initiated])
   return (
     <ProgressBarWrapper onClick={clickProgress}>
       <div className="bar-inner" ref={progressBar}>

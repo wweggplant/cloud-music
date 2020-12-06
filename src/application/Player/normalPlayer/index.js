@@ -33,8 +33,8 @@ const _getPosAndScale = () => {
   };
 };
 function NormalPlayer (props) {
-  const { toggleFullScreen, clickPlaying, onProgressChange } = props
-  const { song, fullScreen, playing, percent, currentTime, duration } = props;
+  const { toggleFullScreen, clickPlaying, onProgressChange, handlePrev, handleNext, changeMode } = props
+  const { song, fullScreen, playing, percent, currentTime, duration, mode } = props;
   const normalPlayerRef = useRef ();
   const cdWrapperRef = useRef ();
   const enter = () => {
@@ -130,16 +130,16 @@ function NormalPlayer (props) {
             <div className="time time-r">{formatPlayTime(duration)}</div>
           </ProgressWrapper>
           <Operators>
-            <div className="icon i-left" >
-              <i className="iconfont">&#xe625;</i>
+            <div className="icon i-left" onClick={changeMode}>
+              <i className="iconfont" dangerouslySetInnerHTML={{__html: ["&#xe625;", "&#xe653;", "&#xe61b;"][mode]}}></i>
             </div>
-            <div className="icon i-left">
+            <div className="icon i-left" onClick={handlePrev}>
               <i className="iconfont">&#xe6e1;</i>
             </div>
             <div className="icon i-center" onClick={e => clickPlaying(e, !playing)}>
               {playing ? <i className="iconfont">&#xe723;</i> : <i className="iconfont">&#xe731;</i>}
             </div>
-            <div className="icon i-right">
+            <div className="icon i-right" onClick={handleNext}>
               <i className="iconfont">&#xe718;</i>
             </div>
             <div className="icon i-right">
