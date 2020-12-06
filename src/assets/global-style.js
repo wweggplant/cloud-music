@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 const extendClick = () => {
     return `
         position:relative;
@@ -37,3 +38,10 @@ export default {
   extendClick,
   noWrap
 }
+
+export const Content = styled.div`
+  position: fixed;
+  top: 90px;
+  bottom: ${props => props.play > 0?"60px": 0};
+  width: 100%;
+`

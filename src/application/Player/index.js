@@ -125,8 +125,6 @@ function Player(props) {
     <>
       { isEmptyObject(currentSong) ? null :
         <MiniPlayer
-          mode={mode}
-          changeMode={changeMode}
           percent={percent}
           song={currentSong}
           fullScreen={fullScreen}
@@ -137,6 +135,8 @@ function Player(props) {
       }
       { isEmptyObject(currentSong) ? null :
         <NormalPlayer
+          mode={mode}
+          changeMode={changeMode}
           handlePrev={handlePrev}
           handleNext={handleNext}
           currentTime={currentTime}

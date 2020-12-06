@@ -12,6 +12,7 @@ import {
   Operators,
   CDWrapper,
 } from "./style";
+import {playMode} from "../../../api/config";
 
 const transform = prefixStyle ("transform");
 
@@ -80,9 +81,7 @@ function NormalPlayer (props) {
     cdWrapperDom.style[transform] = "";
     normalPlayerRef.current.style.display = "none";
   }
-  useEffect(() => {
-
-  }, [percent])
+  const getPlayMode = () => ["&#xe625;", "&#xe653;", "&#xe61b;"][mode] || "&#xe625;"
   return (
     <CSSTransition
       classNames="normal"
@@ -131,7 +130,7 @@ function NormalPlayer (props) {
           </ProgressWrapper>
           <Operators>
             <div className="icon i-left" onClick={changeMode}>
-              <i className="iconfont" dangerouslySetInnerHTML={{__html: ["&#xe625;", "&#xe653;", "&#xe61b;"][mode]}}></i>
+              <i className="iconfont" dangerouslySetInnerHTML={{ __html: getPlayMode() }}>{}</i>
             </div>
             <div className="icon i-left" onClick={handlePrev}>
               <i className="iconfont">&#xe6e1;</i>
