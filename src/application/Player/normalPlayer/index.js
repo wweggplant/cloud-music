@@ -34,7 +34,7 @@ const _getPosAndScale = () => {
   };
 };
 function NormalPlayer (props) {
-  const { toggleFullScreen, clickPlaying, onProgressChange, handlePrev, handleNext, changeMode } = props
+  const { toggleFullScreen, clickPlaying, onProgressChange, handlePrev, handleNext, changeMode, togglePlayList } = props
   const { song, fullScreen, playing, percent, currentTime, duration, mode } = props;
   const normalPlayerRef = useRef ();
   const cdWrapperRef = useRef ();
@@ -72,7 +72,7 @@ function NormalPlayer (props) {
     const cdWrapperDom = cdWrapperRef.current
     cdWrapperDom.style.transition = 'all .4s'
     const { x, y, scale } = _getPosAndScale ();
-    cdWrapperDom.style[transform] = `translate3d (${x} px, ${y} px, 0) scale (${scale})`;
+    cdWrapperDom.style[transform] = `translate3d(${x} px, ${y} px, 0) scale (${scale})`;
   }
   const afterLeave = () => {
     if (!cdWrapperRef.current) return;
@@ -141,7 +141,7 @@ function NormalPlayer (props) {
             <div className="icon i-right" onClick={handleNext}>
               <i className="iconfont">&#xe718;</i>
             </div>
-            <div className="icon i-right">
+            <div className="icon i-right" onClick={() => togglePlayList (true)}>
               <i className="iconfont">&#xe640;</i>
             </div>
           </Operators>

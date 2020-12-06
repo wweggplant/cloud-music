@@ -4,7 +4,6 @@ import { CSSTransition } from 'react-transition-group';
 import  Header  from './../../baseUI/header/index';
 import Scroll from '../../baseUI/scroll'
 import MusicNote from "../../baseUI/music-note/index";
-import SongsList from "../SongsList";
 import { isEmptyObject} from '../../api/utils'
 import { getAlbumList } from './store/actionCreators'
 import { connect } from "react-redux";
@@ -14,6 +13,7 @@ import AlbumDetail from "../../components/album-detail";
 const mapStateToProps = (state) => ({
   currentAlbum: state.getIn(['album', 'currentAlbum']),
   enterLoading: state.getIn(['album', 'enterLoading']),
+  songsCount: state.getIn (['player', 'playList']).size,
 })
 const mapDispatchToProps = dispatch => ({
   getAlbumDataDispatch (id) {
@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(function (props) {
   const [showStatus, setShowStatus] = useState (true);
   const id = props.match.params.id;
-  const { currentAlbum: currentAlbumImmutable, enterLoading, pullUpLoading } = props
+  const { currentAlbum: currentAlbumImmutable, enterLoading, pullUpLoading, songsCount } = props
   const { getAlbumDataDispatch, changePlayListDispatch } = props
   let currentAlbum = currentAlbumImmutable.toJS ();
   const handleBack = useCallback(() => {
@@ -53,7 +53,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(function 
       unmountOnExit
       onExited={props.history.goBack}
     >
-      <Container>
+      <Container play={songsCount}>
         <Header title={"返回"} handleClick={handleBack}></Header>
         {!isEmptyObject(currentAlbum) ?
         <Scroll

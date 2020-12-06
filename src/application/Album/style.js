@@ -8,6 +8,7 @@ export const Container = styled.div`
   right: 0;
   bottom: 0;
   z-index: 1000;
+  bottom: ${props => props.play > 0 ? "60px": 0};
   background: ${style["background-color"]};
   transform-origin: right bottom;
   &.fly-enter, &.fly-appear {

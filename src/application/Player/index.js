@@ -10,6 +10,7 @@ import {changeCurrentSong,
 } from "./store/actionCreators";
 import MiniPlayer from './miniPlayer';
 import NormalPlayer from './normalPlayer';
+import PlayList from './play-list';
 import {getSongUrl, playMode,} from "../../api/config";
 import {isEmptyObject, findIndex, shuffle} from "../../api/utils";
 
@@ -21,6 +22,7 @@ function Player(props) {
     changePlayListDispatch,//改变playList
     changeModeDispatch,//改变mode,
     changeCurrentIndexDispatch,
+    togglePlayListDispatch,
     changeCurrentDispatch
   } = props
   const [currentTime, setCurrentTime] = useState(0);
@@ -33,6 +35,8 @@ function Player(props) {
   const sequencePlayList = immutableSequencePlayList.toJS();
   //记录当前的歌曲，以便于下次重渲染时比对是否是一首歌
   const [preSong, setPreSong] = useState({});
+  const songReady = useRef (true);
+
   const audioRef = useRef()
 
   useEffect(() => {
@@ -45,10 +49,13 @@ function Player(props) {
       return;
     const current = playList[currentIndex]
     changeCurrentDispatch(current)
+    songReady.current = false
     setPreSong(current);
     audioRef.current.src = getSongUrl(current.id)
     setTimeout(() => {
-      audioRef.current.play();
+      audioRef.current.play().then (() => {
+        songReady.current = true;
+      });
     });
     togglePlayingDispatch(true);//播放状态
     setCurrentTime(0);//从头开始播放
@@ -57,6 +64,10 @@ function Player(props) {
   useEffect(() => {
     playing ? audioRef.current.play() : audioRef.current.pause()
   },[playing])
+  const handleError = () => {
+    songReady.current = true;
+    alert ("播放出错");
+  };
   const changeMode = () => {
     let newMode = (mode + 1) % 3;
     if (newMode === 0) {
@@ -131,6 +142,7 @@ function Player(props) {
           playing={playing}
           toggleFullScreen={toggleFullScreenDispatch}
           clickPlaying={clickPlaying}
+          togglePlayList={togglePlayListDispatch}
         />
       }
       { isEmptyObject(currentSong) ? null :
@@ -148,9 +160,11 @@ function Player(props) {
           playing={playing}
           toggleFullScreen={toggleFullScreenDispatch}
           clickPlaying={clickPlaying}
+          togglePlayList={togglePlayListDispatch}
         />
       }
-      <audio ref={audioRef} onTimeUpdate={timeUpdate} onEnded={handleEnd}></audio>
+      <PlayList clearPreSong={setPreSong.bind(null, {})}></PlayList>
+      <audio ref={audioRef} onTimeUpdate={timeUpdate} onEnded={handleEnd} onError={handleError}></audio>
     </>
   )
 }

@@ -9,7 +9,7 @@ import { getRankList } from './store/actionCreators'
 import { EnterLoading } from '../Singers/style'
 
 function Rank(props) {
-  const { rankList:list, loading } = props;
+  const { rankList:list, loading, songsCount } = props;
 
   const { getRankListDataDispatch } = props;
 
@@ -61,7 +61,7 @@ function Rank(props) {
   }
 
   return (
-    <Container>
+    <Container play={songsCount}>
       <Scroll>
         <div>
           <h1 className="offical" style={displayStyle}> 官方榜 </h1>
@@ -80,6 +80,7 @@ function Rank(props) {
 const mapStateToProps = (state) => ({
   rankList: state.getIn(['rank', 'rankList']),
   loading: state.getIn(['rank', 'loading']),
+  songsCount: state.getIn (['player', 'playList']).size
 })
 const mapDispatchToProps = dispatch => ({
   getRankListDataDispatch() {
