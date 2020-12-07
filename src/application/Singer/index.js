@@ -83,6 +83,9 @@ function Singer(props) {
   const musicAnimation = (x, y) => {
     musicNoteRef.current.startAnimation ({ x, y });
   };
+  const setShowStatusFalse = useCallback(() => {
+    setShowStatus(false);
+  }, [])
   // 往上偏移的尺寸，露出圆角
   const OFFSET = 5;
   useEffect(function () {
@@ -102,7 +105,7 @@ function Singer(props) {
       onExited={() => props.history.goBack ()}
     >
       <Container play={songsCount}>
-        <Header ref={header} title={"头部"}></Header>
+        <Header ref={header} title={artist.name} handleClick={setShowStatusFalse}></Header>
         <ImgWrapper ref={imageWrapper} bgUrl={artist.picUrl}>
           <div className="filter"></div>
         </ImgWrapper>

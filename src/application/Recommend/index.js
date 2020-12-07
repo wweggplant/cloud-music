@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import Slider from '../../components/slider'
 import RecommendList from '../../components/list'
 import Scroll from '../../baseUI/scroll'
-import styled from'styled-components';
 import { connect } from "react-redux";
 import * as actionTypes from './store/actionCreators';
 import { forceCheck } from 'react-lazyload';
@@ -22,7 +21,7 @@ function Recommend(props) {
     if (!recommendList.size) {
       getRecommendListDataDispatch()
     }
-  }, [bannerList.size, getBannerDataDispatch, getRecommendListDataDispatch, recommendList.size])
+  }, [bannerList.size, recommendList.size])
   const bannerListJS = bannerList ? bannerList.toJS() : []
   const recommendListJS = recommendList ? recommendList.toJS() : []
   return (
@@ -40,8 +39,6 @@ function Recommend(props) {
 }
 
 const mapStateToProps = (state) => ({
-  // 不要在这里将数据 toJS
-  // 不然每次 diff 比对 props 的时候都是不一样的引用，还是导致不必要的重渲染，属于滥用 immutable
   songsCount: state.getIn (['player', 'playList']).size,
   bannerList: state.getIn(['recommend', 'bannerList']),
   recommendList: state.getIn(['recommend', 'recommendList']),

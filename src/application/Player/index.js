@@ -13,6 +13,8 @@ import NormalPlayer from './normalPlayer';
 import PlayList from './play-list';
 import {getSongUrl, playMode,} from "../../api/config";
 import {isEmptyObject, findIndex, shuffle} from "../../api/utils";
+import Lyric from '../../api/lyric-parser'
+import { getLyricRequest } from "./../../api/request";
 
 function Player(props) {
   const { fullScreen, playing, currentIndex, mode, playList: immutablePlayList, sequencePlayList:immutableSequencePlayList, currentSong: immutableCurrentSong } = props
@@ -36,8 +38,36 @@ function Player(props) {
   //记录当前的歌曲，以便于下次重渲染时比对是否是一首歌
   const [preSong, setPreSong] = useState({});
   const songReady = useRef (true);
-
   const audioRef = useRef()
+  // 歌词处理
+  const currentLyric = useRef(null)
+  const currentLineNum = useRef(0);
+  const [currentPlayingLyric, setPlayingLyric] = useState('')
+  const getLyric = id => {
+    let lyric = "";
+    if (currentLyric.current) {
+      currentLyric.current.stop()
+    }
+    getLyricRequest(id).then(data => {
+      lyric = data.lrc.lyric;
+      if (!lyric) {
+        currentLyric.current = null;
+        return
+      }
+      currentLyric.current = new Lyric(lyric, handleLyric)
+      currentLyric.current.play()
+      currentLineNum.current = 0
+      currentLyric.current.seek (0);
+    }).catch(() => {
+      songReady.current = true;
+      audioRef.current.play ();
+    })
+  }
+  const handleLyric = ({lineNum, txt}) => {
+    if (!currentLyric.current) return;
+    currentLineNum.current = lineNum;
+    setPlayingLyric(txt);
+  }
 
   useEffect(() => {
     if (
@@ -58,6 +88,7 @@ function Player(props) {
       });
     });
     togglePlayingDispatch(true);//播放状态
+    getLyric(current.id);// 获取歌词
     setCurrentTime(0);//从头开始播放
     setDuration((current.dt / 1000) | 0);//时长
   }, [currentIndex, playList])
@@ -88,6 +119,9 @@ function Player(props) {
   const clickPlaying = (e, state) => {
     e.stopPropagation();
     togglePlayingDispatch(state);
+    if(currentLyric.current) {
+      currentLyric.current.togglePlay(currentTime*1000)
+    }
   };
   const percentChange = (curPercent) => {
     const newTime = curPercent * duration;
@@ -95,6 +129,9 @@ function Player(props) {
     audioRef.current.currentTime = newTime;
     if (!playing) {
       togglePlayingDispatch(true);
+    }
+    if(currentLyric.current) {
+      currentLyric.current.seek(newTime*1000)
     }
   }
   const timeUpdate = (e) => {
@@ -147,6 +184,9 @@ function Player(props) {
       }
       { isEmptyObject(currentSong) ? null :
         <NormalPlayer
+          currentLineNum={currentLineNum.current}
+          currentLyric={currentLyric.current}
+          currentPlayingLyric={currentPlayingLyric}
           mode={mode}
           changeMode={changeMode}
           handlePrev={handlePrev}
