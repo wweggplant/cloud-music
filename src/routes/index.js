@@ -28,6 +28,12 @@ export default [
         component: Search
       } ,
       {
+        path: "/album/:id",
+        exact: true,
+        key: "album",
+        component: Album
+      },
+      {
         path: '/recommend',
         component: Recommend,
         key: '/recommend',

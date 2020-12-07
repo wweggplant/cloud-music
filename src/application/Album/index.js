@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef  } from 'react'
-import { Container, TopDesc, Menu } from './style'
+import { Container } from './style'
 import { CSSTransition } from 'react-transition-group';
 import  Header  from './../../baseUI/header/index';
 import Scroll from '../../baseUI/scroll'
@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 import Loading from '../../baseUI/loading'
 import {changePlayList} from "../Player/store/actionCreators";
 import AlbumDetail from "../../components/album-detail";
+import { HEADER_HEIGHT } from '../../api/config'
+import style from '../../assets/global-style'
+
 const mapStateToProps = (state) => ({
   currentAlbum: state.getIn(['album', 'currentAlbum']),
   enterLoading: state.getIn(['album', 'enterLoading']),
@@ -31,19 +34,36 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(function 
   const { currentAlbum: currentAlbumImmutable, enterLoading, pullUpLoading, songsCount } = props
   const { getAlbumDataDispatch, changePlayListDispatch } = props
   let currentAlbum = currentAlbumImmutable.toJS ();
+  const [title, setTitle] = useState("歌单");
+  const [isMarquee, setIsMarquee] = useState(false);
+  const musicNoteRef = useRef()
+  const headerEl = useRef();
   const handleBack = useCallback(() => {
     setShowStatus (false);
   }, []);
-  const handleScroll = useCallback(() => {
-  const musicNoteRef = useRef()
-  }, [])
+  const handleScroll = useCallback((pos) => {
+    let minScrollY = -HEADER_HEIGHT;
+    let percent = Math.abs(pos.y/minScrollY);
+    let headerDom = headerEl.current;
+    if(pos.y < minScrollY) {
+      headerDom.style.backgroundColor = style["theme-color"];
+      headerDom.style.opacity = Math.min(1, (percent-1)/2);
+      setTitle(currentAlbum&&currentAlbum.name);
+      setIsMarquee(true);
+    } else{
+      headerDom.style.backgroundColor = "";
+      headerDom.style.opacity = 1;
+      setTitle("歌单");
+      setIsMarquee(false);
+    }
+  }, [currentAlbum]);
   useEffect (() => {
     getAlbumDataDispatch (id);
   }, [getAlbumDataDispatch, id]);
   const musicAnimation = (x, y) => {
     musicNoteRef.current.startAnimation ({ x, y });
   };
-  const musicNoteRef = useRef()
+
   return (
     <CSSTransition
       in={showStatus}
@@ -54,7 +74,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(function 
       onExited={props.history.goBack}
     >
       <Container play={songsCount}>
-        <Header title={"返回"} handleClick={handleBack}></Header>
+        <Header ref={headerEl} title={title} handleClick={handleBack} isMarquee={isMarquee}></Header>
         {!isEmptyObject(currentAlbum) ?
         <Scroll
           bounceTop={false}

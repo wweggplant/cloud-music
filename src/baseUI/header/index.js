@@ -24,11 +24,15 @@ const HeaderContainer = styled.div`
   }
 `
 const Header = React.forwardRef ((props, ref) => {
-  const { handleClick, title} = props;
+  const { handleClick, title, isMarquee} = props;
   return (
     <HeaderContainer ref={ref}>
       <i className="iconfont back"  onClick={handleClick}>&#xe655;</i>
-      <h1>{title}</h1>
+      {
+        // eslint-disable-next-line
+        isMarquee ? <marquee><h1>{title}</h1></marquee>:
+        <h1>{title}</h1>
+      }
     </HeaderContainer>
   )
 })
