@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { changeEnterLoading } from "./store/actionCreators";
 import { getSingerInfo } from "./store/actionCreators";
 import Loading from "./../../baseUI/loading/index";
+import { EnterLoading } from "../Singers/style";
 import { HEADER_HEIGHT } from "./../../api/config";
 
 function Singer(props) {
@@ -53,8 +54,8 @@ function Singer(props) {
     // 指的是滑动距离占图片高度的百分比
     const percent = Math.abs (newY /height);
     if (newY > 0) {
-      imageDOM.style ["transform"] = `scale(${1 + percent})`;
-      buttonDOM.style ["transform"] = `translate3d(0, ${newY}px, 0)`;
+      imageDOM.style["transform"] = `scale(${1 + percent})`;
+      buttonDOM.style["transform"] = `translate3d(0, ${newY}px, 0)`;
       layerDOM.style.top = `${height - OFFSET + newY}px`;
     } else if (newY >= minScrollY) {
       layerDOM.style.top = `${height - OFFSET - Math.abs (newY)}px`;
@@ -64,8 +65,8 @@ function Singer(props) {
       imageDOM.style.height = 0;
       imageDOM.style.zIndex = -1;
       // 按钮跟着移动且渐渐变透明
-      buttonDOM.style ["transform"] = `translate3d(0, ${newY}px, 0)`;
-      buttonDOM.style ["opacity"] = `${1 - percent * 2}`;
+      buttonDOM.style["transform"] = `translate3d(0, ${newY}px, 0)`;
+      buttonDOM.style["opacity"] = `${1 - percent * 2}`;
     } else if (newY < minScrollY) {
       // 往上滑动，但是超过 Header 部分
       layerDOM.style.top = `${HEADER_HEIGHT - OFFSET}px`;
@@ -124,6 +125,11 @@ function Singer(props) {
             </SongsList>
           </Scroll>
         </SongListWrapper>
+        {loading ? (
+          <EnterLoading style={{ zIndex: 100 }}>
+            <Loading></Loading>
+          </EnterLoading>
+        ) : null}
         <MusicNote ref={musicNoteRef}></MusicNote>
       </Container>
     </CSSTransition>)

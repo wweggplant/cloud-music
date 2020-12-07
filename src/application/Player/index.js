@@ -91,7 +91,7 @@ function Player(props) {
     getLyric(current.id);// 获取歌词
     setCurrentTime(0);//从头开始播放
     setDuration((current.dt / 1000) | 0);//时长
-  }, [currentIndex, playList])
+  }, [changeCurrentDispatch, currentIndex, getLyric, playList, preSong.id, togglePlayingDispatch])
   useEffect(() => {
     playing ? audioRef.current.play() : audioRef.current.pause()
   },[playing])

@@ -34,7 +34,7 @@ function Rank(props) {
         {
           list.map ((item, index) => {
             return (
-              <ListItem key={item.coverImgId} tracks={item.tracks} onClick={() => enterDetail (item)} >
+              <ListItem key={`${item.coverImgId}${index}`} tracks={item.tracks} onClick={() => enterDetail (item)} >
                 <div className="img_wrapper">
                   <img src={item.coverImgUrl} alt=""/>
                   <div className="decorate"></div>

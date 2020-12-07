@@ -49,24 +49,24 @@ function PlayList(props) {
     // 让列表显示
     setIsShow(true);
     // 最开始是隐藏在下面
-    listWrapperRef.current.style [transform] = `translate3d(0, 100%, 0)`;
-  }, [transform]);
+    listWrapperRef.current.style[transform] = `translate3d(0, 100%, 0)`;
+  }, []);
 
   const onEnteringCB = useCallback(() => {
     // 让列表展现
-    listWrapperRef.current.style ["transition"] = "all 0.3s";
-    listWrapperRef.current.style [transform] = `translate3d(0, 0, 0)`;
-  }, [transform]);
+    listWrapperRef.current.style["transition"] = "all 0.3s";
+    listWrapperRef.current.style[transform] = `translate3d(0, 0, 0)`;
+  }, []);
 
   const onExitingCB = useCallback(() => {
-    listWrapperRef.current.style ["transition"] = "all 0.3s";
-    listWrapperRef.current.style [transform] = `translate3d(0px, 100%, 0px)`;
-  }, [transform]);
+    listWrapperRef.current.style["transition"] = "all 0.3s";
+    listWrapperRef.current.style[transform] = `translate3d(0px, 100%, 0px)`;
+  }, []);
 
   const onExitedCB = useCallback(() => {
     setIsShow(false);
-    listWrapperRef.current.style [transform] = `translate3d(0px, 100%, 0px)`;
-  }, [transform]);
+    listWrapperRef.current.style[transform] = `translate3d(0px, 100%, 0px)`;
+  }, []);
   const getCurrentIcon = (item) => {
     // 是不是当前正在播放的歌曲
     const current = currentSong.id === item.id;
@@ -133,13 +133,13 @@ function PlayList(props) {
   }
   const handleTouchStart = (e) => {
     if (!canTouch || initialed) return;
-    listWrapperRef.current.style ["transition"] = "";
-    setStartY (e.nativeEvent.touches [0].pageY);// 记录 y 值
+    listWrapperRef.current.style["transition"] = "";
+    setStartY (e.nativeEvent.touches[0].pageY);// 记录 y 值
     setInitialed (true);
   };
   const handleTouchMove = (e) => {
     if (!canTouch || !initialed) return;
-    let distance = e.nativeEvent.touches [0].pageY - startY;
+    let distance = e.nativeEvent.touches[0].pageY - startY;
     if (distance < 0) return;
     setDistance (distance);// 记录下滑距离
     listWrapperRef.current.style.transform = `translate3d (0, ${distance} px, 0)`;
@@ -152,8 +152,8 @@ function PlayList(props) {
       togglePlayListDispatch (false);
     } else {
       // 否则反弹回去
-      listWrapperRef.current.style ["transition"] = "all 0.3s";
-      listWrapperRef.current.style [transform] = `translate3d (0px, 0px, 0px)`;
+      listWrapperRef.current.style["transition"] = "all 0.3s";
+      listWrapperRef.current.style[transform] = `translate3d (0px, 0px, 0px)`;
     }
   };
   return (
