@@ -104,7 +104,6 @@ function PlayList(props) {
   };
   const getPlayMode = (e) => {
     let content, text;
-    let newMode = (mode + 1) % 3;
     if(mode === playMode.sequence) {
       content = "&#xe625;";
       text = "顺序播放";

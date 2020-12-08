@@ -59,7 +59,7 @@ const handleInsertSong = (state, song) => {
     }
   }
   // 同理，处理 sequenceList
-  let sequenceIndex = findIndex (playList [currentIndex], sequenceList) + 1;
+  let sequenceIndex = findIndex (playList[currentIndex], sequenceList) + 1;
   let fsIndex = findIndex (song, sequenceList);
   // 插入歌曲
   sequenceList.splice (sequenceIndex, 0, song);

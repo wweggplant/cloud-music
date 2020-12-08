@@ -33,6 +33,7 @@ function Search(props) {
     setShow (true);
     if (!hotList.size)
       getHotKeyWordsDispatch ();
+    // eslint-disable-next-line
   }, []);
   const selectItem = (e, id) => {
     getSongDetailDispatch(id)

@@ -12,7 +12,7 @@ function Home(props) {
   return (
     <div>
       <Top>
-        <span className='iconfont menu'>&#xe65c;</span>
+        <span className='iconfont menu' onClick={() => alert('用户模块开发中')}>&#xe65c;</span>
         <span className='title'>云音乐</span>
         <span className='iconfont search' onClick={() => props.history.push ('/search')}>&#xe62b;</span>
       </Top>

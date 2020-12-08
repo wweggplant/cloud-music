@@ -8,21 +8,29 @@ function SearchBox(props) {
   const [query, setQuery] = useState('')
   const displayStyle = query ? {display: 'block'}: {display: 'none'};
   // 进场出现光标
+  let handleQueryDebounce = useMemo (() => {
+    return debounce (handleQuery, 500);
+  }, [handleQuery]);
   useEffect (() => {
-    queryRef.current.focus ();
+    let curQuery = query;
+    if(newQuery !== query){
+      curQuery = newQuery;
+      queryRef.current.value = newQuery;
+    }
+    setQuery(curQuery);
+    // eslint-disable-next-line
   }, []);
   useEffect (() => {
     if (newQuery !== query){
       setQuery (newQuery);
     }
+    // eslint-disable-next-line
   }, [newQuery]);
   useEffect (() => {
     // 注意防抖
     handleQueryDebounce (query);
+    // eslint-disable-next-line 
   }, [query]);
-  let handleQueryDebounce = useMemo (() => {
-    return debounce (handleQuery, 500);
-  }, [handleQuery]);
   const clearQuery = () => {
     setQuery ('');
     queryRef.current.focus ();

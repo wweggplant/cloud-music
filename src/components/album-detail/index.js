@@ -1,9 +1,10 @@
 import React from 'react'
-import {Menu, TopDesc} from "../../application/Album/style";
+// import {Menu, TopDesc} from "../../application/Album/style";
+import {TopDesc} from "../../application/Album/style";
 import SongsList from "../../application/SongsList";
 
 function AlbumDetail(props) {
-  const { currentAlbum, pullUpLoading, musicAnimation} = props
+  const { currentAlbum, musicAnimation} = props
 
   const renderTopDesc = () => (<TopDesc background={currentAlbum.coverImgUrl}>
     <div className="background">
@@ -27,7 +28,7 @@ function AlbumDetail(props) {
       </div>
     </div>
   </TopDesc>)
-  const renderMenu = () => (<Menu>
+  /* const renderMenu = () => (<Menu>
     <div>
       <i className="iconfont">&#xe6ad;</i>
       评论
@@ -44,7 +45,7 @@ function AlbumDetail(props) {
       <i className="iconfont">&#xe606;</i>
       更多
     </div>
-  </Menu>)
+  </Menu>) */
   const renderSongList = () => {
     return (
         <SongsList
@@ -59,7 +60,7 @@ function AlbumDetail(props) {
   return (
       <div>
         { renderTopDesc() }
-        { renderMenu() }
+        {/* { renderMenu() } */}
         { renderSongList() }
       </div>
   )

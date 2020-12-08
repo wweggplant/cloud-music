@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback  } from 'react'
 import { CSSTransition } from "react-transition-group";
-import { Container, ImgWrapper, CollectButton, BgLayer, SongListWrapper } from './style'
+// import { Container, ImgWrapper, CollectButton, BgLayer, SongListWrapper } from './style'
+import { Container, ImgWrapper, BgLayer, SongListWrapper } from './style'
 import Header from '../../baseUI/header'
 import SongsList from "../SongsList";
 import Scroll from "../../baseUI/scroll";
@@ -24,7 +25,7 @@ function Singer(props) {
   const [showStatus, setShowStatus] = useState (true);
   const artist = immutableArtist.toJS();
   const songs = immutableSongs.toJS();
-  const collectButton = useRef ();
+  // const collectButton = useRef ();
   const imageWrapper = useRef ();
   const songScrollWrapper = useRef ();
   const songScroll = useRef ();
@@ -47,7 +48,7 @@ function Singer(props) {
     let height = initialHeight.current;
     const newY = pos.y;
     const imageDOM = imageWrapper.current;
-    const buttonDOM = collectButton.current;
+    // const buttonDOM = collectButton.current;
     const headerDOM = header.current;
     const layerDOM = layer.current;
     const minScrollY = -(height - OFFSET) + HEADER_HEIGHT;
@@ -55,7 +56,7 @@ function Singer(props) {
     const percent = Math.abs (newY /height);
     if (newY > 0) {
       imageDOM.style["transform"] = `scale(${1 + percent})`;
-      buttonDOM.style["transform"] = `translate3d(0, ${newY}px, 0)`;
+      // buttonDOM.style["transform"] = `translate3d(0, ${newY}px, 0)`;
       layerDOM.style.top = `${height - OFFSET + newY}px`;
     } else if (newY >= minScrollY) {
       layerDOM.style.top = `${height - OFFSET - Math.abs (newY)}px`;
@@ -65,8 +66,8 @@ function Singer(props) {
       imageDOM.style.height = 0;
       imageDOM.style.zIndex = -1;
       // 按钮跟着移动且渐渐变透明
-      buttonDOM.style["transform"] = `translate3d(0, ${newY}px, 0)`;
-      buttonDOM.style["opacity"] = `${1 - percent * 2}`;
+      // buttonDOM.style["transform"] = `translate3d(0, ${newY}px, 0)`;
+      // buttonDOM.style["opacity"] = `${1 - percent * 2}`;
     } else if (newY < minScrollY) {
       // 往上滑动，但是超过 Header 部分
       layerDOM.style.top = `${HEADER_HEIGHT - OFFSET}px`;
@@ -110,10 +111,10 @@ function Singer(props) {
         <ImgWrapper ref={imageWrapper} bgUrl={artist.picUrl}>
           <div className="filter"></div>
         </ImgWrapper>
-        <CollectButton ref={collectButton}>
+        {/* <CollectButton ref={collectButton}>
           <i className="iconfont">&#xe62d;</i>
           <span className="text"> 收藏 </span>
-        </CollectButton>
+        </CollectButton> */}
         <BgLayer ref={layer}></BgLayer>
         <SongListWrapper ref={songScrollWrapper}>
           <Scroll ref={songScroll} onScroll={handleScroll }>

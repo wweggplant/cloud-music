@@ -8,7 +8,6 @@ import { isEmptyObject} from '../../api/utils'
 import { getAlbumList } from './store/actionCreators'
 import { connect } from "react-redux";
 import Loading from '../../baseUI/loading'
-import {changePlayList} from "../Player/store/actionCreators";
 import AlbumDetail from "../../components/album-detail";
 import { HEADER_HEIGHT } from '../../api/config'
 import style from '../../assets/global-style'
@@ -21,9 +20,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => ({
   getAlbumDataDispatch (id) {
     dispatch(getAlbumList(id))
-  },
-  changePlayListDispatch(currentAlbum) {
-    dispatch(changePlayList(currentAlbum.tracks))
   }
 })
 
@@ -32,7 +28,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(React.memo(function 
   const [showStatus, setShowStatus] = useState (true);
   const id = props.match.params.id;
   const { currentAlbum: currentAlbumImmutable, enterLoading, pullUpLoading, songsCount } = props
-  const { getAlbumDataDispatch, changePlayListDispatch } = props
+  const { getAlbumDataDispatch } = props
   let currentAlbum = currentAlbumImmutable.toJS ();
   const [title, setTitle] = useState("歌单");
   const [isMarquee, setIsMarquee] = useState(false);
